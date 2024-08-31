@@ -24,7 +24,9 @@ wss.on("connection", function connection(ws) {
   console.log(++user);
   ws.send("hello message from the server");
 });
-
-server.listen(8080, () => {
-  console.log("connected to the server" + "  " + new Date());
+const PORT = 8080;
+server.listen(PORT, () => {
+  console.log(
+    "connected to the server" + "  " + new Date() + "on port " + PORT
+  );
 });
