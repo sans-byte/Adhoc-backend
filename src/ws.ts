@@ -11,6 +11,7 @@ const server = http.createServer((req, res) => {
 
 const wss = new WebSocketServer({ server });
 
+let user = 0;
 wss.on("connection", function connection(ws) {
   ws.on("error", console.error);
   ws.on("message", function message(data, isBinary) {
@@ -20,6 +21,7 @@ wss.on("connection", function connection(ws) {
       }
     });
   });
+  console.log(++user);
   ws.send("hello message from the server");
 });
 
