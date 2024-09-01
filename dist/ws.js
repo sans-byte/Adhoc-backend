@@ -38,9 +38,17 @@ const ws_1 = require("ws");
 const app = (0, express_1.default)();
 const PORT = 8080;
 const httpServer = app.listen(PORT, () => {
-    console.log("Listning on port " + PORT + "on " + new Date());
+    console.log("Listning on port " + PORT + " on " + new Date());
 });
 const wss = new ws_1.WebSocketServer({ server: httpServer });
 wss.on("connection", (ws) => {
+    ws.on("error", console.error);
+    ws.on("message", (data, isBinary) => {
+        wss.clients.forEach((client) => {
+            if (client.readyState == ws_1.WebSocket.OPEN) {
+                client.send(data, { binary: isBinary });
+            }
+        });
+    });
     ws.send("Connected to the web socket");
 });
